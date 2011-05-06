@@ -1,11 +1,32 @@
-<!DOCTYPE html>  <html> <head>   <title>denemeler.coffee</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>            <div id="jump_to">         Jump To &hellip;         <div id="jump_wrapper">           <div id="jump_page">                                           <a class="source" href="denemeler.html">                 denemeler.coffee               </a>                                           <a class="source" href="server.html">                 server.coffee               </a>                        </div>         </div>       </div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs">             <h1>               denemeler.coffee             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>                            </td>             <td class="code">               <div class="highlight"><pre><span class="nx">xmpp</span> <span class="o">=</span> <span class="nx">require</span> <span class="s1">&#39;node-xmpp&#39;</span>
-<span class="nx">client</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">xmpp</span><span class="p">.</span><span class="nx">Client</span> <span class="nv">jid: </span><span class="s1">&#39;haldun@optimus.local&#39;</span><span class="p">,</span> <span class="nv">password: </span><span class="s1">&#39;haldun&#39;</span>
-<span class="nx">client</span><span class="p">.</span><span class="kc">on</span> <span class="s1">&#39;online&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="o">-&gt;</span>
-  <span class="nx">client</span><span class="p">.</span><span class="nx">send</span> <span class="k">new</span> <span class="nx">xmpp</span><span class="p">.</span><span class="nx">Element</span><span class="p">(</span><span class="s1">&#39;presence&#39;</span><span class="p">,</span> <span class="nv">type: </span><span class="s1">&#39;chat&#39;</span><span class="p">)</span>
-  <span class="nx">client</span><span class="p">.</span><span class="nx">send</span> <span class="k">new</span> <span class="nx">xmpp</span><span class="p">.</span><span class="nx">Element</span><span class="p">(</span><span class="s1">&#39;iq&#39;</span><span class="p">,</span> <span class="nv">type: </span><span class="s1">&#39;get&#39;</span><span class="p">).</span><span class="nx">c</span><span class="p">(</span><span class="s1">&#39;query&#39;</span><span class="p">,</span> <span class="nv">xmlns: </span><span class="s1">&#39;jabber:iq:roster&#39;</span><span class="p">)</span>
-<span class="nx">client</span><span class="p">.</span><span class="kc">on</span> <span class="s1">&#39;stanza&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">stanza</span><span class="p">)</span> <span class="o">-&gt;</span>
-  <span class="k">if</span> <span class="nx">stanza</span><span class="p">.</span><span class="o">is</span> <span class="s1">&#39;iq&#39;</span>
-    <span class="k">for</span> <span class="nx">item</span> <span class="k">in</span> <span class="nx">stanza</span><span class="p">.</span><span class="nx">getChild</span><span class="p">(</span><span class="s1">&#39;query&#39;</span><span class="p">).</span><span class="nx">getChildren</span><span class="p">(</span><span class="s1">&#39;item&#39;</span><span class="p">)</span>
-      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span> <span class="nx">item</span><span class="p">.</span><span class="nx">attrs</span>
+<!DOCTYPE html>  <html> <head>   <title>denemeler.coffee</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>            <div id="jump_to">         Jump To &hellip;         <div id="jump_wrapper">           <div id="jump_page">                                           <a class="source" href="denemeler.html">                 denemeler.coffee               </a>                                           <a class="source" href="server.html">                 server.coffee               </a>                        </div>         </div>       </div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs">             <h1>               denemeler.coffee             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>                            </td>             <td class="code">               <div class="highlight"><pre><span class="k">switch</span> <span class="nx">day</span>
+  <span class="k">when</span> <span class="s2">&quot;Mon&quot;</span> <span class="k">then</span> <span class="nx">go</span> <span class="nx">work</span>
+  <span class="k">when</span> <span class="s2">&quot;Tue&quot;</span> <span class="k">then</span> <span class="nx">go</span> <span class="nx">relax</span>
+  <span class="k">when</span> <span class="s2">&quot;Thu&quot;</span> <span class="k">then</span> <span class="nx">go</span> <span class="nx">iceFishing</span>
+  <span class="k">when</span> <span class="s2">&quot;Fri&quot;</span>
+    <span class="k">if</span> <span class="nx">day</span> <span class="o">is</span> <span class="nx">bingoDay</span>
+      <span class="nx">go</span> <span class="nx">bingo</span>
+      <span class="nx">go</span> <span class="nx">dancing</span>
+  <span class="k">when</span> <span class="s2">&quot;Sun&quot;</span> <span class="k">then</span> <span class="nx">go</span> <span class="nx">church</span>
+  <span class="k">else</span> <span class="nx">go</span> <span class="nx">work</span></pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <p>message =
+  command: 'naber'
+{command, data} = message
+console.log command
+console.log data</p>
 
-</pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 
+<h1>xmpp = require 'node-xmpp'</h1>
+
+<h1>client = new xmpp.Client jid: 'haldun@optimus.local', password: 'haldun'</h1>
+
+<h1>client.on 'online', () -></h1>
+
+<h1>client.send new xmpp.Element('presence', type: 'chat')</h1>
+
+<h1>client.send new xmpp.Element('iq', type: 'get').c('query', xmlns: 'jabber:iq:roster')</h1>
+
+<h1>client.on 'stanza', (stanza) -></h1>
+
+<h1>if stanza.is 'iq'</h1>
+
+<h1>for item in stanza.getChild('query').getChildren('item')</h1>
+
+<h1>console.log item.attrs</h1>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 
