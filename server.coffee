@@ -37,6 +37,7 @@ socket.on 'connection', (connection) ->
       client.on 'stanza', (stanza) ->
         # We've received a message from xmpp, pass it to the client with
         # appropriate packaging.
+        # TODO Error handling needed here
         if stanza.is 'message'
           body = stanza.getChildren 'body'
           if body[0]
