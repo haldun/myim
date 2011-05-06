@@ -1,32 +1,42 @@
+# Where the magic happens
 connect = require 'connect'
 xmpp = require 'node-xmpp'
 io = require 'socket.io'
 port = 3000
+
+# Configure connect application
 app = connect(
   connect.compiler(src: __dirname + '/client', dest: __dirname + '/static', enable: ['coffeescript']),
   connect.compiler(src: __dirname + '/common', dest: __dirname + '/static', enable: ['coffeescript']),
   connect.static(__dirname + '/static'),
   connect.errorHandler dumpExceptions: true, showStack: true
 )
+
+# Create websocket listener and attach it to our app.
 socket = io.listen app
-# Here, connection => connection to the web client
-#       client     => xmpp client
+
+# Here, connection is the connection to the web client and client is xmpp client
 socket.on 'connection', (connection) ->
   client = null
-
   connection.on 'message', (data) ->
-    console.log data
     message = try JSON.parse data
-    return unless message or (client is null and message.command is not 'login')
 
+    # If we cannot parse the message, pass. If we have not created an xmpp client
+    # yet, and the message is not a login message, again pass this message.
+    return unless message or (client is null and message.command is not 'login')
     if message.command is 'login'
       {jid, password} = message
       client = new xmpp.Client jid: jid, password: password
       client.on 'online', () ->
+        # When connected to the xmpp server, send a presence
         client.send new xmpp.Element('presence', type: 'chat')
         console.log "xmpp client connected with jid: #{client.jid}"
+
+        # Send a message back to the web client, so that client knows she's online
         connection.send JSON.stringify type: 'status', value: 'online'
       client.on 'stanza', (stanza) ->
+        # We've received a message from xmpp, pass it to the client with
+        # appropriate packaging.
         if stanza.is 'message'
           body = stanza.getChildren 'body'
           if body[0]
@@ -42,4 +52,5 @@ socket.on 'connection', (connection) ->
     else
       console.log "Unrecognized command: #{message.command}"
 
+# Start the rock rolling
 app.listen port
